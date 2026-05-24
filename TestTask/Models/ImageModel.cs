@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace TestTask.Models
@@ -15,7 +16,11 @@ namespace TestTask.Models
         private BitmapImage _image;
         private bool _isLoad;
         private int _progress;
-
+        private CancellationTokenSource _cts;
+        public ImageModel()
+        {
+            _cts = new CancellationTokenSource();
+        }
         public string Url
         {
             get { return _url; }
@@ -31,7 +36,7 @@ namespace TestTask.Models
             set
             {
                 _image = value;
-                OnPropertyChanged("Image");
+                OnPropertyChanged("BitmapImage");
             }
         }
         public bool IsLoad
@@ -41,6 +46,7 @@ namespace TestTask.Models
             {
                 _isLoad = value;
                 OnPropertyChanged("IsLoad");
+                CommandManager.InvalidateRequerySuggested();
             }
         }
         public int Progress
@@ -50,6 +56,16 @@ namespace TestTask.Models
             {
                 _progress = value;
                 OnPropertyChanged("Progress");
+            }
+        }
+
+        public CancellationTokenSource Cts
+        {
+            get { return _cts; }
+            set
+            {
+                _cts = value;
+                OnPropertyChanged();
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

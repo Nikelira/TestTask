@@ -11,8 +11,8 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <ItemsControl>
+
+        <ItemsControl ItemsSource="{Binding Images}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="1" Columns="3"/>
@@ -22,18 +22,20 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
-                        <Image Height="150" Stretch="UniformToFill"></Image>
-                        <TextBox/>
-                        <Button Content="Start"/>
-                        <Button Content="Stop"/>
+                        <Image Source="{Binding BitmapImage}" Height="150" Stretch="UniformToFill"></Image>
+                        <TextBox Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Content="Start" Command="{Binding DataContext.StartCommand, 
+                      RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
+                        <Button Content="Stop" Command="{Binding DataContext.StopCommand, 
+                      RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
         <StackPanel Grid.Row="1">
-            <Button Margin="0 5" Height="30" Content="LOAD ALL"/>
-            <ProgressBar Height="30" Margin="0 5" />
+            <Button Margin="0 5" Height="30" Content="LOAD ALL" Command="{Binding LoadAllCommand}"/>
+            <ProgressBar Height="30" Margin="0 5" Value="{Binding TotalProgress}"/>
         </StackPanel>
     </Grid>
 </Window>

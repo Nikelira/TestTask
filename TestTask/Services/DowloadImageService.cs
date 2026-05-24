@@ -51,8 +51,10 @@ namespace TestTask.Services
                         memoryStream.Position = 0;
                         BitmapImage image = new BitmapImage();
                         image.BeginInit();
+                        image.CacheOption = BitmapCacheOption.OnLoad;
                         image.StreamSource = memoryStream;
                         image.EndInit();
+                        image.Freeze();
                         return image;
                     }
                 }
